@@ -14,9 +14,10 @@ public class MemberServiceTest {
         Member m = null;
         try {
             m = service.inputMemberInfo();
+            System.out.println(m);
         } catch (UserIdCountOverExeption e) {
             System.out.println(e.getMessage());
         }
-        System.out.println(m);
+        //
     }
 }
