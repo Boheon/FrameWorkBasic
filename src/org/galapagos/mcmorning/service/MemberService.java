@@ -1,16 +1,56 @@
 package org.galapagos.mcmorning.service;
 
+import lombok.NoArgsConstructor;
 import org.galapagos.mcmorning.cli.Input;
 import org.galapagos.mcmorning.dao.MemberDao;
+import org.galapagos.mcmorning.dao.MemberListDao;
+import org.galapagos.mcmorning.dao.MemberMapDao;
 import org.galapagos.mcmorning.exception.UserIdCountOverExeption;
 import org.galapagos.mcmorning.vo.Member;
 
-import java.util.Scanner;
+import java.util.List;
+ @NoArgsConstructor
 
 public class MemberService {
-    MemberDao dao = new MemberDao();
+    MemberDao dao = new MemberDao() {
+        @Override
+        public List<Member> getMemberList() {
+            return null;
+        }
 
-    public void signUp() {
+        @Override
+        public void add(Member m) {
+
+        }
+
+        @Override
+        public Member findByUserId(String userid) {
+            return null;
+        }
+
+        @Override
+        public Member update(Member m) {
+            return null;
+        }
+
+        @Override
+        public Member delete(String userid) {
+            return null;
+        }
+
+        @Override
+        public List<Member> searchByName(String name) {
+            return null;
+        }
+    };
+
+    public MemberService(MemberListDao memberListDao) {
+    }
+
+     public MemberService(MemberMapDao memberMapDao) {
+     }
+
+     public void signUp() {
 
         Member newUser = null;
         try {
@@ -52,4 +92,19 @@ public class MemberService {
         }
         throw new UserIdCountOverExeption();
     }
-}
+
+    public void searchByName(){
+        System.out.println("[이름으로 찾기]");
+        String keyword = Input.read("검색어 : ");
+
+        List<Member> list = dao.searchByName(keyword);
+        System.out.printf("검색 결과 : %d건\n", list.size());
+        for(Member m : list){
+            System.out.println(m);
+        }
+    }
+
+     public Member login() {
+         return null;
+     }
+ }
