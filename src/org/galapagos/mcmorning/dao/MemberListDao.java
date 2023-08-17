@@ -1,6 +1,7 @@
 package org.galapagos.mcmorning.dao;
 
 import lombok.Getter;
+import org.galapagos.mcmorning.util.Serializer;
 import org.galapagos.mcmorning.vo.Member;
 
 import java.sql.Array;
@@ -8,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-
 public class MemberListDao implements MemberDao {
+    static final String File_PATH = "C:/temp/member_list.dat";
 
     private List<Member> memberList;
 
@@ -36,7 +37,6 @@ public class MemberListDao implements MemberDao {
 //		}
 
         int idx = indexOf(userid);
-
         return idx != -1 ? memberList.get(idx) : null;
 
     }
@@ -56,9 +56,7 @@ public class MemberListDao implements MemberDao {
             memberList.set(idx, m);
             return m;
         }
-
         return null;
-
     }
 
     private int indexOf(String userId) {
@@ -95,6 +93,16 @@ public class MemberListDao implements MemberDao {
         }
 
         return list;
+    }
 
+    @Override
+    public void save() throws Exception{
+        Serializer.save(File_PATH, memberList);
+    }
+
+    @Override
+    public void load() throws Exception{
+        memberList = (List<Member>) Serializer.load(File_PATH);
+        //System.out.println(memberList);
     }
 }
